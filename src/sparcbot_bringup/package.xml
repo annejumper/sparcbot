@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>sparcbot_bringup</name>
+  <version>0.1.0</version>
+  <description>Launch files and the single parameter file (config/sparcbot.yaml) for SPARCBot.</description>
+  <maintainer email="sparcbot@example.com">SPARCBot</maintainer>
+  <license>TODO</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <exec_depend>launch</exec_depend>
+  <exec_depend>launch_ros</exec_depend>
+  <exec_depend>sparcbot_nodes</exec_depend>
+  <exec_depend>sparcbot_control</exec_depend>
+  <exec_depend>sparcbot_teleop</exec_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

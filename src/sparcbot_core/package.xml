@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>sparcbot_core</name>
+  <version>0.1.0</version>
+  <description>
+    ROS-independent C++ core of SPARCBot: motor/encoder hardware interface, wheel
+    state estimation, kinematics and feedforward, plus the standalone bench tests
+    and characterization tools.
+  </description>
+  <maintainer email="sparcbot@example.com">SPARCBot</maintainer>
+  <license>TODO</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>yaml-cpp</depend>
+  <!-- libgpiod v1 (apt: libgpiod-dev). Install with apt if rosdep cannot resolve it. -->
+  <depend>libgpiod-dev</depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

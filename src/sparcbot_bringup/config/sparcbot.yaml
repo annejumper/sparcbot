@@ -1,0 +1,96 @@
+# =============================================================================
+# SPARCBot parameters — the ONE place every robot value lives.
+#
+# Read by:
+#   * the ROS 2 nodes (passed in by sparcbot_bringup/launch/robot.launch.py)
+#   * the standalone C++ bench tests/tools in sparcbot_core
+#     (through sparcbot::config::leftMotor(), leftWheelFeedforward(), ...)
+#
+# Standard ROS 2 parameter-file layout:  <node_name>: ros__parameters: {...}
+# Nested keys become dotted parameter names, e.g. left_motor.gpio_dir.
+#
+# Rules of thumb:
+#   * Write every floating-point value with a decimal point (1.0, not 1).
+#   * No value has a hidden default in code
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# Hardware driver: motors, encoders, wheel-state estimator.
+# -----------------------------------------------------------------------------
+sparcbot_driver:
+  ros__parameters:
+    control_rate_hz: 100.0      # encoder read + /wheel_states publish rate
+    cmd_timeout_s: 0.1          # coast if no /wheel_cmd for this long (<= 0 disables)
+
+    wheel_radius_m: 0.010
+    counts_per_rev: 500.0       # encoder counts per gearbox output revolution
+    velocity_cutoff_hz: 8.0     # first-order low-pass on wheel velocity (<= 0 disables)
+
+    # Wiring. Signs make "positive command" and "positive
+    # encoder motion" both mean robot-forward wheel motion.
+    left_motor:
+      name: left
+      gpio_dir: 23
+      gpio_ps: 24
+      gpio_enc_a: 17
+      gpio_enc_b: 27
+      pwm_chip: 0
+      pwm_channel: 0
+      pwm_frequency_hz: 20000
+      motor_sign: 1
+      encoder_sign: -1
+
+    right_motor:
+      name: right
+      gpio_dir: 22
+      gpio_ps: 25
+      gpio_enc_a: 5
+      gpio_enc_b: 6
+      pwm_chip: 0
+      pwm_channel: 1
+      pwm_frequency_hz: 20000
+      motor_sign: 1
+      encoder_sign: 1
+
+# -----------------------------------------------------------------------------
+# Differential-drive kinematics: /cmd_vel <-> wheel velocities.
+# -----------------------------------------------------------------------------
+diff_drive:
+  ros__parameters:
+    base_width_m: 0.175         # wheel separation (track width)
+
+# -----------------------------------------------------------------------------
+# Wheel velocity controller (feedforward + PID), one block per wheel.
+# Feedforward values come from characterization.
+# -----------------------------------------------------------------------------
+wheel_controller:
+  ros__parameters:
+    left:
+      kp: 0.0   # TODO: tune
+      ki: 0.0   # TODO: tune
+      kd: 0.0   # TODO: tune
+      feedforward:
+        forward_static: 0.0701
+        forward_velocity_gain: 1.739
+        reverse_static: 0.062
+        reverse_velocity_gain: 1.7162
+        forward_breakaway: 0.15
+        reverse_breakaway: 0.13
+        stopped_velocity_threshold: 0.005
+        max_command: 1.0
+        zero_velocity_threshold: 0.0001
+
+    right:
+      kp: 0.0   # TODO: tune
+      ki: 0.0   # TODO: tune
+      kd: 0.0   # TODO: tune
+      feedforward:
+        forward_static: 0.033
+        forward_velocity_gain: 1.639
+        reverse_static: 0.031
+        reverse_velocity_gain: 1.700
+        forward_breakaway: 0.10
+        reverse_breakaway: 0.13
+        stopped_velocity_threshold: 0.005
+        max_command: 1.0
+        zero_velocity_threshold: 0.0001

@@ -1,0 +1,15 @@
+# colcon
+build/
+install/
+log/
+
+# standalone sparcbot_core build
+sparcbot_core/build/
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# wheel_pid_test output
+wheel_pid_*.csv
