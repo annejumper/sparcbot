@@ -107,9 +107,20 @@ class WheelController:
         # and the state set up in __init__. Use self.log(...) to record data.
 
         # BEGIN SOLUTION
-        outputs = [] #in the form of WheelControllerOutput data class defined at the top
 
-        return outputs
+
+
+
+        left_wheel_output = WheelControllerOutput(error_m_s=0.0,
+                        feedforward_command=0.0,
+                        feedback_command=0.0,
+                        command=0.0)
+
+        right_wheel_output = WheelControllerOutput(error_m_s=0.0,
+                        feedforward_command=0.0,
+                        feedback_command=0.0,
+                        command=0.0)
+        return [left_wheel_output, right_wheel_output]
         # END SOLUTION
 
     def reset(self) -> None:
