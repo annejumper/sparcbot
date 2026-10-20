@@ -206,7 +206,7 @@ def plot(path, rows, speeds, duration_s, title_suffix='', show=True, band=True,
  
 def main(args=None):
     parser = argparse.ArgumentParser(description='Wheel velocity step test.')
-    parser.add_argument('--speeds', type=float, nargs='+', default=[0.05, -0.1, 0.15],
+    parser.add_argument('--speeds', type=float, nargs='+', default=[0.25, -0.5, 0.75],
                         help='linear velocities to test [m/s] (default 0.2 0.6 1.0)')
     parser.add_argument('--duration', type=float, default=3.0,
                         help='seconds at each speed (default 3)')
