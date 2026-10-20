@@ -13,9 +13,9 @@ RIGHT = 1
 class WheelControllerOutput:
     """Result for one wheel for one control step."""
 
-    error_m_s: float = 0.0            # target - measured
-    feedforward_command: float = 0.0  # feedforward part (including deadband)
-    feedback_command: float = 0.0     # feedback (PID) part
+    error_m_s: float = 0.0            # OPTIONAL for debugging: target - measured
+    feedforward_command: float = 0.0  # OPTIONAL for debugging: feedforward part (including deadband)
+    feedback_command: float = 0.0     # OPTIONAL for debugging: feedback (PID) part
     command: float = 0.0              # duty sent to the motor, in [-1, 1]
 
 
@@ -110,16 +110,9 @@ class WheelController:
 
 
 
+        left_wheel_output = WheelControllerOutput(command=0.0) #TODO set command to your final controller output
 
-        left_wheel_output = WheelControllerOutput(error_m_s=0.0,
-                        feedforward_command=0.0,
-                        feedback_command=0.0,
-                        command=0.0)
-
-        right_wheel_output = WheelControllerOutput(error_m_s=0.0,
-                        feedforward_command=0.0,
-                        feedback_command=0.0,
-                        command=0.0)
+        right_wheel_output = WheelControllerOutput(command=0.0) #TODO set command to your final controller output
         return [left_wheel_output, right_wheel_output]
         # END SOLUTION
 
