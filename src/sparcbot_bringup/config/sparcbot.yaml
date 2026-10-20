@@ -3,15 +3,11 @@
 #
 # Read by:
 #   * the ROS 2 nodes (passed in by sparcbot_bringup/launch/robot.launch.py)
-#   * the standalone C++ bench tests/tools in sparcbot_core
-#     (through sparcbot::config::leftMotor(), leftWheelFeedforward(), ...)
 #
-# Standard ROS 2 parameter-file layout:  <node_name>: ros__parameters: {...}
 # Nested keys become dotted parameter names, e.g. left_motor.gpio_dir.
 #
 # Rules of thumb:
 #   * Write every floating-point value with a decimal point (1.0, not 1).
-#   * No value has a hidden default in code
 # =============================================================================
 
 # -----------------------------------------------------------------------------
@@ -55,16 +51,20 @@ sparcbot_driver:
 # -----------------------------------------------------------------------------
 # Differential-drive kinematics: /cmd_vel <-> wheel velocities.
 # -----------------------------------------------------------------------------
-diff_drive:
-  ros__parameters:
-    base_width_m: 0.175         # wheel separation (track width)
+/**:
+     ros__parameters:
+       base_width_m: 0.175 #Measure your wheel to wheel distance to get base_width
 
 # -----------------------------------------------------------------------------
 # Wheel velocity controller (feedforward + PID), one block per wheel.
-# Feedforward values come from characterization.
+# Measure the feedforward and breakaway values in open_loop mode (see README).
 # -----------------------------------------------------------------------------
 wheel_controller:
   ros__parameters:
+    # CSV file that every control step is written to; '' disables logging.
+    # Use an absolute path, e.g. /home/sparcbot/logs/ff_sweep.csv
+    log_file: ''
+
     left:
       kp: 0.0   # TODO: tune
       ki: 0.0   # TODO: tune
