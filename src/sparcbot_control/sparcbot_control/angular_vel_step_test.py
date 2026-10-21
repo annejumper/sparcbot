@@ -223,8 +223,8 @@ def plot(path, rows, rates, duration_s, title_suffix='', show=True, band=True,
 
 def main(args=None):
     parser = argparse.ArgumentParser(description='Angular velocity step test (turn in place).')
-    parser.add_argument('--rates', type=float, nargs='+', default=[1.5, -5.0, 7.5],
-                        help='angular velocities to test [rad/s], + = left (default 0.5 -1.0 1.5)')
+    parser.add_argument('--rates', type=float, nargs='+', default=[1.0, -2.0, 3.0],
+                        help='angular velocities to test [rad/s], + = left (default 1.0, -2.0, 3.0)')
     parser.add_argument('--duration', type=float, default=3.0,
                         help='seconds at each rate (default 3)')
     parser.add_argument('--settling-time', type=float, default=0.5,
