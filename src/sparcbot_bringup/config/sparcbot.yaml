@@ -80,8 +80,8 @@ wheel_controller:
         zero_velocity_threshold: 0.0005
 
     right:
-      kp: 1.0
-      ki: 0.7
+      kp: 0.0
+      ki: 0.0
       kd: 0.0
       feedforward:
         forward_static: 0.0
