@@ -1,13 +1,7 @@
 """Keyboard teleop that also records and plots how well the wheels follow the command.
 
-Same keys and behaviour as keyboard_teleop. While you drive, every control step
-(100 Hz) is recorded: commanded and measured velocity (and motor duty) of each wheel.
-When you quit (q or Ctrl-C) it saves a CSV and shows a plot, with your key
-presses marked, so you can see what the controller does over a bump or up a slope.
-
     ros2 launch sparcbot_bringup robot.launch.py      # terminal 1
     ros2 run sparcbot_teleop record_teleop            # terminal 2
-    ros2 run sparcbot_teleop record_teleop --output-dir ~/runs --no-show
 
 Run it with `ros2 run` (not from a launch file): it needs the terminal's keyboard.
 
