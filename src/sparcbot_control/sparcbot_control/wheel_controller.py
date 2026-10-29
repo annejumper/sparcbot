@@ -107,12 +107,32 @@ class WheelController:
         # and the state set up in __init__. Use self.log(...) to record data.
 
         # BEGIN SOLUTION
+        current_error_left = target_velocity_m_s[LEFT] - measured_velocity_m_s[LEFT]
+        current_error_right = target_velocity_m_s[RIGHT] - measured_velocity_m_s[RIGHT]
+        error_left = 0.95*current_error_left + 0.05*self.previous_error[LEFT]
+        error_right = 0.95*current_error_right + 0.05*self.previous_error[RIGHT]
 
+        u_left = self.config[LEFT].forward_velocity_gain * target_velocity_m_s[LEFT] + self.config[LEFT].kp * (error_left)+self.config[LEFT].ki*self.error_integral[LEFT]
+        u_right = self.config[RIGHT].forward_velocity_gain * target_velocity_m_s[RIGHT] + self.config[RIGHT].kp * (error_right)+self.config[RIGHT].ki*self.error_integral[RIGHT]
+        self.error_integral[LEFT] += (target_velocity_m_s[LEFT] - measured_velocity_m_s[LEFT]) * dt_s
+        self.error_integral[RIGHT] += (target_velocity_m_s[RIGHT] - measured_velocity_m_s[RIGHT]) * dt_s
 
+        u_left_deadband = u_left
+        u_right_deadband = u_right
+        self.previous_error = [error_left, error_right]
 
-        left_wheel_output = WheelControllerOutput(command=0.0) #TODO set command to your final controller output
-
-        right_wheel_output = WheelControllerOutput(command=0.0) #TODO set command to your final controller output
+        if u_left > 0:
+            u_left_deadband += self.config[LEFT].forward_breakaway
+        elif u_left < 0:
+            u_left_deadband -= self.config[LEFT].reverse_breakaway
+        
+        if u_right > 0:
+            u_right_deadband += self.config[RIGHT].forward_breakaway
+        elif u_right < 0:
+            u_right_deadband -= self.config[RIGHT].reverse_breakaway
+       
+        left_wheel_output = WheelControllerOutput(command=u_left_deadband) #TODO set command to your final controller output
+        right_wheel_output = WheelControllerOutput(command=u_right_deadband) #TODO set command to your final controller output
         return [left_wheel_output, right_wheel_output]
         # END SOLUTION
 
